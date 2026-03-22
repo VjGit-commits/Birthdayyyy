@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Only For You ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  padding: 30px;
+}
+
+.question {
+  margin: 25px auto;
+  padding: 20px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 15px;
+  max-width: 420px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+  width: 75%;
+  text-align: center;
+  outline: none;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: white;
+  color: #ff4b7d;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.result {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 18px;
+  min-height: 24px;
+}
+
+.final {
+  margin-top: 40px;
+  font-size: 22px;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Let's Play a Small Game....</h1>
+<p>Try Madu ...... 😏</p>
+
+<!-- Q1 -->
+<div class="question">
+  🎬 Ninna favorite actor?
+  <br>
+  <input id="q1" onkeydown="enterSubmit(event,this)">
+  <br>
+  <button onclick="check('q1',['kiccha sudeep','sudeep'],this)">Submit</button>
+  <div class="result"></div>
+</div>
+
+<!-- Q2 -->
+<div class="question">
+  🌄 Favorite place?
+  <br>
+  <input id="q2" onkeydown="enterSubmit(event,this)">
+  <br>
+  <button onclick="checkPlace(this)">Submit</button>
+  <div class="result"></div>
+</div>
+
+<!-- Q3 -->
+<div class="question">
+  🍽️ Favorite food?
+  <br>
+  <input id="q3" onkeydown="enterSubmit(event,this)">
+  <br>
+  <button onclick="check('q3',['dose','roti'],this)">Submit</button>
+  <div class="result"></div>
+</div>
+
+<!-- Q4 -->
+<div class="question">
+  🍫 Sweet favorite?
+  <br>
+  <input id="q4" onkeydown="enterSubmit(event,this)">
+  <br>
+  <button onclick="check('q4',['chocolate','ice cream'],this)">Submit</button>
+  <div class="result"></div>
+</div>
+
+<!-- Q5 -->
+<div class="question">
+  💖 Most important?
+  <br>
+  <input id="q5" onkeydown="enterSubmit(event,this)">
+  <br>
+  <button onclick="check('q5',['parents','family'],this)">Submit</button>
+  <div class="result"></div>
+</div>
+
+<!-- FINAL MESSAGE -->
+<div class="final" id="finalMsg">
+  Eeeeeeeeeee...Heganistu are you happy? 😏<br><br>
+  ninna nagso chikka prayatna💖<br><br>
+  And Tax kododuuuu 😂<br>
+  Happy Birthday Chreeeeeeeeeeeeee ❤️🎉
+</div>
+
+<!-- ✅ NEXT BUTTON ALWAYS VISIBLE -->
+<div style="margin-top:20px;">
+  <button onclick="goNext()">Next ➡️</button>
+</div>
+
+</div>
+
+<script>
+
+/* ENTER KEY */
+function enterSubmit(event, input) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    let btn = input.parentElement.querySelector("button");
+    btn.click();
+  }
+}
+
+/* TYPING EFFECT */
+function typeEffect(element, text) {
+  let i = 0;
+  element.innerHTML = "";
+  let interval = setInterval(() => {
+    element.innerHTML += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, 25);
+}
+
+/* COMMON CHECK */
+function check(id, correctList, btn) {
+  if (btn.disabled) return;
+
+  let input = document.getElementById(id);
+  let value = input.value.toLowerCase().trim();
+  let result = btn.parentElement.querySelector(".result");
+
+  btn.disabled = true;
+
+  let isCorrect = correctList.some(ans => value.includes(ans));
+
+  let msg = isCorrect
+    ? "😏 Chupper chreee… idu gothu nanige 💖"
+    : (value.length > 2
+        ? "😄 Hmm… naan bere enoo ankonde 😜"
+        : "😜 Ayyo chree… swalpa try madu 😏");
+
+  typeEffect(result, msg);
+  showFinal();
+}
+
+/* PLACE SPECIAL */
+function checkPlace(btn) {
+  if (btn.disabled) return;
+
+  let input = document.getElementById("q2");
+  let value = input.value.toLowerCase().trim();
+  let result = btn.parentElement.querySelector(".result");
+
+  btn.disabled = true;
+
+  let msg = (value.includes("chikkamagalur") || value.includes("chikmagalur"))
+    ? "😏 Naanu idanne ankonde… gothu nanige 💖"
+    : "😂 Ayyooo… naanu Davangere ankonde 😜";
+
+  typeEffect(result, msg);
+  showFinal();
+}
+
+/* FINAL MESSAGE SHOW AFTER ALL ANSWERED */
+function showFinal() {
+  let totalAnswered = document.querySelectorAll("button:disabled").length;
+
+  if (totalAnswered >= 5) {
+    document.getElementById("finalMsg").style.display = "block";
+  }
+}
+
+/* OPEN NEXT PAGE IN NEW TAB */
+function goNext() {
+  window.open("wish.html", "_blank");
+}
+
+</script>
+
+</body>
+</html>
